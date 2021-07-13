@@ -260,7 +260,8 @@ class BroadcastedPluginInstance implements PluginCallbacks {
             srcInstance: this.instanceId,
         };
         // window.console.trace('[@hookstate/broadcasted]: sending message', this.topic, message);
-        this.broadcastRef.channel.postMessage(message);
+        // optional chaining, stop if broadcastRef is null or undefined
+        this.broadcastRef?.channel.postMessage(message);
     }
 
     submitValueFromState(dst?: string) {
@@ -298,7 +299,8 @@ class BroadcastedPluginInstance implements PluginCallbacks {
             message.dstInstance = dst;
         }
         // window.console.trace('[@hookstate/broadcasted]: sending message', this.topic, message);
-        this.broadcastRef.channel.postMessage(message);
+        // optional chaining, stop if broadcastRef is null or undefined
+        this.broadcastRef?.channel.postMessage(message);
     }
 
     onDestroy() {
@@ -358,7 +360,7 @@ export function Broadcasted<S>(
 
     return () => ({
         id: PluginID,
-        init: (state) => {
+        init: (state: any) => {
             return new BroadcastedPluginInstance(
                 selfOrTopic as string,
                 state,
